@@ -10,7 +10,7 @@ import java.net.*;
 /**
  * @author Cohn, Matthias
  * Ermittelt wesentliche Systemeigenschaften und gibt diese zurück
- * @version 2017-06-16
+ * @version 2017-06-22
  */
 public class SysInf {
 	private static Map<String, String> env;
@@ -204,7 +204,7 @@ public String getIPv6Addr(){
 	 * @return Double (Gesamt-)Kapazität der Systempartition in MB
 	 */
 	public Double getSysDriveCap(){
-		return (Double) FSrootCap/Math.pow(1024, 2);
+		return (double) (Math.round((Double) FSrootCap/Math.pow(1024, 2)*100)/100);
 	}
 	
 	/**
@@ -212,7 +212,7 @@ public String getIPv6Addr(){
 	 * @return Double Freie Kapazität der Systempartition in MB
 	 */
 	public Double getSysDriveFree(){
-		return (Double) FSrootFree/Math.pow(1024, 2);
+		return (double) Math.round((Double) FSrootFree/Math.pow(1024, 2)*100)/100;
 	}
 	
 	/**
@@ -220,7 +220,7 @@ public String getIPv6Addr(){
 	 * @return Double verwendete Kapazität der Systempartition in MB
 	 */
 	public Double getSysDriveUsed(){
-		return (Double) (FSrootCap-FSrootFree)/Math.pow(1024, 2);
+		return (double) Math.round((Double) (FSrootCap-FSrootFree)/Math.pow(1024, 2)*100)/100;
 	}
 	
 	/**
@@ -228,7 +228,7 @@ public String getIPv6Addr(){
 	 * @return Float Nutzung der Systempartition in %
 	 */
 	public Float getSysDriveUsage(){
-		return (float) (((getSysDriveCap()-getSysDriveFree())/getSysDriveCap())*100);
+		return (float) Math.round((float) (((getSysDriveCap()-getSysDriveFree())/getSysDriveCap())*100)*100)/100;
 	}
 	
 /*	
