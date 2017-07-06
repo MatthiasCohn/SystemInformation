@@ -19,11 +19,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  * @author Cohn, Matthias Ermittelt wesentliche Systemeigenschaften und gibt
  *         diese zurück
- * @version 2017-06-22
+ * @version 1.0 (2017-06-22)
  */
 public class SysInf {
 	private static Map<String, String> env;
-	private static double FSrootCap, FSrootFree;
+	private static double dFSrootCap, dFSrootFree;
 	private static String sInet4, sInet6, sMAC, sFilePath;
 	final static String sDLL = "jRegistryKey.dll";
 
@@ -43,8 +43,8 @@ public class SysInf {
 			if (root.getAbsolutePath().contains(env.get("HOMEDRIVE"))) {
 				// System.out.println("File system root: " +
 				// root.getAbsolutePath());
-				FSrootCap = Double.valueOf(root.getTotalSpace());
-				FSrootFree = Double.valueOf(root.getFreeSpace());
+				dFSrootCap = Double.valueOf(root.getTotalSpace());
+				dFSrootFree = Double.valueOf(root.getFreeSpace());
 				// System.out.println("Usable space (bytes): " +
 				// root.getUsableSpace());
 			}
@@ -223,7 +223,7 @@ public class SysInf {
 	 * @return Double (Gesamt-)Kapazität der Systempartition in MB
 	 */
 	public Double getSysDriveCap() {
-		return (double) (Math.round((Double) FSrootCap / Math.pow(1024, 2) * 100) / 100);
+		return (double) (Math.round((Double) dFSrootCap / Math.pow(1024, 2) * 100) / 100);
 	}
 
 	/**
@@ -232,7 +232,7 @@ public class SysInf {
 	 * @return Double Freie Kapazität der Systempartition in MB
 	 */
 	public Double getSysDriveFree() {
-		return (double) Math.round((Double) FSrootFree / Math.pow(1024, 2) * 100) / 100;
+		return (double) Math.round((Double) dFSrootFree / Math.pow(1024, 2) * 100) / 100;
 	}
 
 	/**
@@ -241,7 +241,7 @@ public class SysInf {
 	 * @return Double verwendete Kapazität der Systempartition in MB
 	 */
 	public Double getSysDriveUsed() {
-		return (double) Math.round((Double) (FSrootCap - FSrootFree) / Math.pow(1024, 2) * 100) / 100;
+		return (double) Math.round((Double) (dFSrootCap - dFSrootFree) / Math.pow(1024, 2) * 100) / 100;
 	}
 
 	/**
@@ -303,6 +303,7 @@ public class SysInf {
 		return arrlSW;
 	}
 	
+	@SuppressWarnings("unused")
 	private static ArrayList<String> arrlInstalledSW(String sFile) throws Exception{
 		ArrayList<String> arrlSW=new ArrayList<String>();
 		FileReader frFile = null;
@@ -334,9 +335,8 @@ public class SysInf {
 		}
 		if (arrlSW != null){
 			return arrlSW;
-		}else{
-			return null;
 		}
+		return arrlSW;
 	}
 	
 	private static boolean bDeleteFile(String sFile){
